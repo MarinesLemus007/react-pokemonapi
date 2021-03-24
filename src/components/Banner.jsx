@@ -9,7 +9,7 @@ const useStyles = makeStyles({
         background: '#313131',
         height: 250,
         overflow: 'hidden',
-        marginBottom: '50px !important'
+        // marginBottom: '50px !important'
     },
 });
 
