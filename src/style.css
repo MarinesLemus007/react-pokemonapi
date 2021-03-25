@@ -15,3 +15,18 @@
 .MuiAppBar-colorPrimary {
     color: #292727 !important;
 }
+
+.anchor{
+    text-decoration: none;
+    background-color: #f2c010;
+    color: #313131;
+    font-size: 13px;
+    padding: 5px;
+    border-radius: 4px;
+    display: inline-block;
+    font-weight: 500;
+}
+
+.anchor:hover{
+    background-color: #ffa000;
+}

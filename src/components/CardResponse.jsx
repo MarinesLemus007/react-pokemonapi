@@ -1,12 +1,11 @@
 import React,{ useState, useEffect } from 'react'
-import Grid from '@material-ui/core/Grid'
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import { Card, CardActionArea, CardContent, CardMedia, Typography, Button, Box } from '@material-ui/core/';
+import { Grid, Card, CardActionArea, CardContent, CardMedia, Typography, Button,
+Box, CardActions, Backdrop, CircularProgress } from '@material-ui/core/';
 import axios from 'axios';
 import Visibility from '@material-ui/icons/Visibility';
-import Backdrop from '@material-ui/core/Backdrop';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { amber } from '@material-ui/core/colors';
+import {Link} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -25,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     backdrop: {
         zIndex: theme.zIndex.drawer + 1,
         color: '#fff',
-    }
+    },
 }));
 
 const theme = createMuiTheme({
@@ -69,14 +68,15 @@ const CardResponse = () => {
 
     return (
         <>
-            {data.map((item, index) =>(
-                <Grid key={index} item xs={12} sm={4} md={3} lg={3} xl={2}>
+        <Grid container spacing={1}>
+            {data.map((element, index) =>(
+                <Grid item xs={12} sm={4} md={3} lg={3} xl={2} key={index}>
                     <Card className={classes.root}>
                         <CardActionArea>
                             <CardMedia
                                 className={classes.media}
                                 image={`https://pokeres.bastionbot.org/images/pokemon/${ index + 1 }.png`}
-                                title={item.name}
+                                title={element.name}
                             />
                             <CardContent>
                                 <Typography variant="body2" color="textSecondary" component="p">
@@ -84,17 +84,29 @@ const CardResponse = () => {
                                 </Typography>
 
                                 <Typography gutterBottom variant="h5" component="h2" className={classes.textcapitalize}>
-                                    {item.name}
+                                    {element.name}
                                 </Typography>
                     
                             </CardContent>
                         </CardActionArea>
+                        <CardActions>
+                            <Typography>
+                                <Link className="anchor" to={`/detail/${index + 1}`}>
+                                    GO TO
+                                </Link>
+                            </Typography>
+                        </CardActions>
+                        {/* <CardActions>
+                            <Button variant="contained" size="small" color="primary">
+                                GO TO
+                            </Button>
+                        </CardActions> */}
                     </Card>
                 </Grid>
             ))}
+        </Grid>
             <Grid
                 container
-                xs={12}
                 direction="row"
                 justify="center"
                 alignItems="center"
