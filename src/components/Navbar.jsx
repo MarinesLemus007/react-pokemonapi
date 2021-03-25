@@ -68,11 +68,11 @@ const Navbar = () => {
 
     return ( 
         <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" style={{ backgroundColor: '#ffc107' }}>
         <Toolbar>
           
           <Typography className={classes.title} variant="h6" noWrap>
-          Find pokemon by their number or name
+          Find pokemon by number or name
           </Typography>
           <div className={classes.search}>
             <div className={classes.searchIcon}>

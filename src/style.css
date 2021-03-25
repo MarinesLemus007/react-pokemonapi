@@ -1,0 +1,17 @@
+:focus {
+    outline: none;
+}
+
+.ScrollUpButton__Container.ScrollUpButton__Toggled{
+    background-color: rgb(255, 193, 7) !important;
+    fill: #313131 !important;
+}
+
+.MuiGrid-spacing-xs-1 {
+    width: 100% !important;
+    margin: auto !important;
+}
+
+.MuiAppBar-colorPrimary {
+    color: #292727 !important;
+}
