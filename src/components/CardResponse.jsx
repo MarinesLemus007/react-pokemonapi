@@ -88,14 +88,17 @@ const CardResponse = () => {
                                 </Typography>
                     
                             </CardContent>
+
+                            <CardActions>
+                                <Typography>
+                                    <Link className="anchor" to={`/detail/${index + 1}`}>
+                                        GO TO
+                                    </Link>
+                                </Typography>
+                            </CardActions>
+
                         </CardActionArea>
-                        <CardActions>
-                            <Typography>
-                                <Link className="anchor" to={`/detail/${index + 1}`}>
-                                    GO TO
-                                </Link>
-                            </Typography>
-                        </CardActions>
+                        
                         {/* <CardActions>
                             <Button variant="contained" size="small" color="primary">
                                 GO TO
