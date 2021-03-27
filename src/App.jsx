@@ -12,11 +12,11 @@ function App() {
       <Router>
         <Switch>
 
-          <Route path="/detail/:id">
+          <Route path="/react-pokemonapi/detail/:id">
             <Detail />
           </Route>
 
-          <Route path="/" exact>
+          <Route path="/react-pokemonapi/" exact>
             <Banner />
             <Navbar />     
             <CardResponse /> 

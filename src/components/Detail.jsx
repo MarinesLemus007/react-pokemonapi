@@ -189,7 +189,7 @@ const Detail = () => {
                                     detailById.abilities.map((el, index)=>{
                                         return <Chip key={index} label={el.ability.name} color="primary" size="small" />})
                                     :
-                                    <Chip label={detailById.abilities.name} color="primary" size="small" />
+                                    <Chip label={detailById.abilities[0].ability.name} color="primary" size="small" />
                                 }
                             </div>
                             <div>
@@ -209,7 +209,7 @@ const Detail = () => {
                 </Grid>
                 
                 <Grid item xs={12} className={classes.textalign}>
-                    <Link className="anchor-goback" to="/">
+                    <Link className="anchor-goback" to="/react-pokemonapi/">
                         GO BACK
                     </Link>
                 </Grid>

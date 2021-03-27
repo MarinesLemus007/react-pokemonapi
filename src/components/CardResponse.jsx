@@ -91,7 +91,7 @@ const CardResponse = () => {
 
                             <CardActions>
                                 <Typography>
-                                    <Link className="anchor" to={`/detail/${index + 1}`}>
+                                    <Link className="anchor" to={`/react-pokemonapi/detail/${index + 1}`}>
                                         GO TO
                                     </Link>
                                 </Typography>
