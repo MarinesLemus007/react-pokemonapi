@@ -2,7 +2,6 @@
 import Banner from './components/Banner';
 import Navbar from './components/Navbar';
 import Detail from './components/Detail';
-import CardResponse from './components/CardResponse';
 import { TinyButton as ScrollUpButton } from "react-scroll-up-button";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
@@ -18,8 +17,8 @@ function App() {
 
           <Route path="/react-pokemonapi/" exact>
             <Banner />
-            <Navbar />     
-            <CardResponse /> 
+            <Navbar/>     
+            {/* <CardResponse inputSearch={inputSearch}/>  */}
             <ScrollUpButton />
           </Route>
           

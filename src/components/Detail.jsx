@@ -83,7 +83,7 @@ const Detail = () => {
         const getResponseById = async () => {
             try {
                 const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
-                console.log(response.data)
+                // console.log(response.data)
                 setDetailById(response.data)
             }
             catch (error) {

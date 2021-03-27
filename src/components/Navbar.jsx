@@ -1,10 +1,11 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
+import CardResponse from './CardResponse';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,7 +67,17 @@ const Navbar = () => {
 
     const classes = useStyles();
 
-    return ( 
+    const [inputSearch, setInputSearch] = useState('');
+
+    const handleInputChange = (event) => {
+      if (event.keyCode === 13) {
+        setInputSearch(event.target.value.toLowerCase())
+        // console.log(event.target.value.toLowerCase())
+      }
+    }
+   
+    return (
+      <> 
         <div className={classes.root}>
       <AppBar position="static" style={{ backgroundColor: '#ffc107' }}>
         <Toolbar>
@@ -79,17 +90,22 @@ const Navbar = () => {
               <SearchIcon />
             </div>
             <InputBase
-              placeholder="Search…"
+              type="text"
+              placeholder="Push enter to search"
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              onKeyDown={handleInputChange}
+              
             />
           </div>
         </Toolbar>
       </AppBar>
     </div>
+    <CardResponse inputSearch={inputSearch}/>
+    </>
      );
 }
  
