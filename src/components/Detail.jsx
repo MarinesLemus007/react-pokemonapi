@@ -5,6 +5,7 @@ import { Grid, Card, CardContent, CardMedia, Typography, LinearProgress, Button 
 import { makeStyles, withStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles/';
 import Chip from '@material-ui/core/Chip';
 import { amber } from '@material-ui/core/colors';
+import {Link} from "react-router-dom";
 
 const BorderLinearProgress = withStyles((theme) => ({
     root: {
@@ -24,12 +25,16 @@ const BorderLinearProgress = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        backgroundColor: '#f9db80',
+        backgroundColor: '#302d31',
+        color: '#cecece'
     },
     media: {
-        height: 205,
-        backgroundSize: 150,
-        backgroundColor: '#f2f2f2'
+        height: 245,
+        backgroundSize: 240,
+        backgroundColor: '#696969'
+    },
+    cardshadowless:{
+        boxShadow: 'none'
     },
     textcapitalize: {
         textTransform: 'capitalize'
@@ -44,6 +49,9 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'row',
         justifyContent: 'center'
     },
+    textalign:{
+        textAlign: 'center'
+    }
 }));
 
 const theme = createMuiTheme({
@@ -126,7 +134,7 @@ const Detail = () => {
                 </Grid>
                 
                 <Grid item xs={12} sm={6} md={4}>
-                    <Card>
+                    <Card className={classes.cardshadowless}>
                         <CardMedia
                             className={classes.media}
                             image={`https://pokeres.bastionbot.org/images/pokemon/${id}.png`}
@@ -143,35 +151,51 @@ const Detail = () => {
                                 {detailById.name}
                             </Typography>
 
-                            <Typography variant="body2" component="p">
-                                Height:  
-                            </Typography>
-                            <Chip label={detailById.height / 10 + "m"} color="default" size="small"/>
+                            <div className="d-flex">
+                                <div>
+                                    <Typography variant="body2" component="p">
+                                        Height:  
+                                    </Typography>
+                                    <Chip label={detailById.height / 10 + "m"} color="default" size="small"/>
+                                </div>
 
-                            <Typography variant="body2" component="p">
-                                Weight:
-                            </Typography>
-                            <Chip label={detailById.weight / 10 + "Kg"} color="default" size="small"/>
+                                <div>
+                                    <Typography variant="body2" component="p">
+                                        Weight:
+                                    </Typography>
+                                    <Chip label={detailById.weight / 10 + "Kg"} color="default" size="small"/>
+                                </div>
 
-                            <div>
-                                Types: {detailById.types.length > 1 ?
-                                    detailById.types.map((el, index)=>{ 
-                                        return <Chip key={index} label={el.type.name} color="secondary" size="small"/> })
-                                    :
-                                    detailById.types
+                                <div>
+                                <Typography variant="body2" component="p">
+                                    Types:
+                                </Typography>
+                                    {   
+                                        detailById.types.length > 1 ?
+                                        detailById.types.map((el, index)=>{ 
+                                            return <Chip key={index} label={el.type.name} color="secondary" size="small"/> })
+                                        :                                 
+                                        <Chip label={detailById.types[0].type.name} color="secondary" size="small"/>
                                     }
+                                </div>
                             </div>
-                            <div>
-                            
-                                Abilities: {detailById.abilities.length > 1 ?
+
+                            <div className="d-flex">
+                            <Typography variant="body2" component="p">
+                                Abilities:
+                            </Typography>
+                                {   
+                                    detailById.abilities.length > 1 ?
                                     detailById.abilities.map((el, index)=>{
                                         return <Chip key={index} label={el.ability.name} color="primary" size="small" />})
                                     :
-                                    detailById.abilities
-                                    }
+                                    <Chip label={detailById.abilities.name} color="primary" size="small" />
+                                }
                             </div>
                             <div>
+                            <Typography variant="body2" component="p">
                                 Stats:
+                            </Typography>
                                 {
                                 detailById.stats.map((el, index) =>{ 
                                 
@@ -183,6 +207,13 @@ const Detail = () => {
                         </CardContent>
                     </Card>
                 </Grid>
+                
+                <Grid item xs={12} className={classes.textalign}>
+                    <Link className="anchor-goback" to="/">
+                        GO BACK
+                    </Link>
+                </Grid>
+
             </Grid>
         : null  }
         </>
