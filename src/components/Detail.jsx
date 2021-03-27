@@ -5,7 +5,9 @@ import { Grid, Card, CardContent, CardMedia, Typography, LinearProgress, Button 
 import { makeStyles, withStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles/';
 import Chip from '@material-ui/core/Chip';
 import { amber } from '@material-ui/core/colors';
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 const BorderLinearProgress = withStyles((theme) => ({
     root: {
@@ -64,11 +66,17 @@ const Detail = () => {
 
     const classes = useStyles();
 
+    let history = useHistory();
+
     const { id } = useParams()
 
     const [detailById, setDetailById] = useState([])
 
     const [loading, setLoading] = useState(false);
+
+    const [nextName, setNextName] = useState('');
+
+    const [previousName, setPreviousName] = useState('');
 
     useEffect(() => {
 
@@ -86,7 +94,43 @@ const Detail = () => {
         }
         getResponseById()
 
+        const getNamePaginationNext = async () =>{
+
+            let nextPagById = parseInt(id) + 1
+
+            try {
+                const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${nextPagById}`)
+                setNextName(response.data.name)
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }
+        getNamePaginationNext()
+
+        const getNamePaginationPrevious = async() =>{
+
+            let previousPagById = parseInt(id) - 1
+
+            try {
+                const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${previousPagById}`)
+                setPreviousName(response.data.name)
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }
+        getNamePaginationPrevious()
+
     }, [id])
+
+    const nextClick = () => {
+        history.push(`/react-pokemonapi/detail/${parseInt(id) + 1}`);
+    }
+
+    const previousClick = () => {
+        history.push(`/react-pokemonapi/detail/${parseInt(id) - 1}`);
+    }
 
     return (
         <>{loading === true ?
@@ -104,17 +148,30 @@ const Detail = () => {
                     <ThemeProvider theme={theme}>
                     <Grid item xs={6} md={4}>
                     
+                    { parseInt(id) <= 1 ? 
                         <Button
                             variant="contained"
                             color="primary"
                             size="large"
                             fullWidth
-                            // endIcon={}
-                            // onClick={}
-                        >
-                            1SEE MORE
+                            startIcon={<ChevronLeftIcon/>}
+                            onClick={()=>{previousClick()}}
+                            disabled>
+                            N.º{parseInt(id) - 1}
                         </Button>
-                    
+                        :
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            size="large"
+                            fullWidth
+                            startIcon={<ChevronLeftIcon/>}
+                            onClick={()=>{previousClick()}}
+                        >
+                            N.º{parseInt(id) - 1} {previousName}
+                        </Button>
+                    }
+
                     </Grid>
                         <Grid item xs={6} md={4}>
                         
@@ -123,10 +180,10 @@ const Detail = () => {
                             color="primary"
                             size="large"
                             fullWidth
-                            // endIcon={}
-                            // onClick={}
+                            endIcon={<ChevronRightIcon/>}
+                            onClick={()=>{nextClick()}}
                         >
-                            2SEE MORE
+                            N.º{parseInt(id) + 1} {nextName}
                         </Button>
                         
                         </Grid>
