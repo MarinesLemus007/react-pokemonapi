@@ -77,8 +77,8 @@
     margin: 0px 1px 0px 1px;
 }
 
-.makeStyles-buttongroup-6 {
-    margin-top: 100px !important;
+.margintopfix {
+    margin-top: 100px;
 }
 
 @media(max-width: 475px){
@@ -92,8 +92,8 @@
         padding: 5px !important;
     }
 
-    .makeStyles-buttongroup-6 {
-        margin-top: 0 !important;
+    .margintopfix {
+        margin-top: 0;
     }
 }
 

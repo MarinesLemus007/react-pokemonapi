@@ -120,15 +120,18 @@ const Detail = () => {
 
             let previousPagById = parseInt(id) - 1
 
-            try {
-                setOpen(true)
-                const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${previousPagById}`)
-                setPreviousName(response.data.name)
-            }
-            catch (error) {
-                console.log(error)
-            }finally{
-                setOpen(false)
+            if(previousPagById !== 0){
+
+                try {
+                    setOpen(true)
+                    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${previousPagById}`)
+                    setPreviousName(response.data.name)
+                }
+                catch (error) {
+                    console.log(error)
+                }finally{
+                    setOpen(false)
+                }
             }
         }
         getNamePaginationPrevious()
@@ -155,6 +158,8 @@ const Detail = () => {
                 alignContent="center"
                 // wrap="nowrap"
             >
+                <div className="margintopfix"></div>
+
                 <Grid container spacing={1}  className={classes.buttongroup}>
                     <ThemeProvider theme={theme}>
                     <Grid item xs={6} md={4}>

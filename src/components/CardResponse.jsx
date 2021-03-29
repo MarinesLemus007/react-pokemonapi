@@ -51,8 +51,6 @@ const CardResponse = (inputSearch) => {
 
     const [open, setOpen] = useState(false);
 
-    // const [inputSearch, setInputSearch] = useState('');
-
     const nextPage = () =>{
         setPage(page + 20)
     }
@@ -71,8 +69,8 @@ const CardResponse = (inputSearch) => {
                 console.log(error);
             }
             finally{
-                setOpen(false)
                 setLoading(true)
+                setOpen(false)
             }
         }
 
@@ -86,19 +84,20 @@ const CardResponse = (inputSearch) => {
             }
             catch(error){
                 console.log(error);
+                setData([])
             }
             finally{
-                setOpen(false)
                 setLoadingSearch(true)
+                setOpen(false)
             }
         }
 
         if(inputSearch.inputSearch !== ''){
-            getResponseSearch();
             setLoading(false)
+            getResponseSearch();
         }else{
-            getResponse();
             setLoadingSearch(false)
+            getResponse();
         }
 
     }, [page, inputSearch.inputSearch])
@@ -109,131 +108,128 @@ const CardResponse = (inputSearch) => {
 
     return (
         <>
-            <Grid container spacing={1}>
-                {
-                    loading === true ? data.map((element, index) =>( 
-                        <Grid item xs={12} sm={4} md={3} lg={3} xl={2} key={index}>
-                            <Card className={classes.root}>
-                                <CardActionArea>
-                                    <CardMedia
-                                        className={classes.media}
-                                        image={`https://pokeres.bastionbot.org/images/pokemon/${ index + 1 }.png`}
-                                        title={element.name}
-                                    />
-                                    <CardContent>
-                                        <Typography variant="body2" color="textSecondary" component="p">
-                                            N.º {index + 1}
-                                        </Typography>
+        <Grid container spacing={1}>
+            {
+                loading === true ? data.map((element, index) =>( 
+                    <Grid item xs={12} sm={4} md={3} lg={3} xl={2} key={index}>
+                        <Card className={classes.root}>
+                            <CardActionArea>
+                                <CardMedia
+                                    className={classes.media}
+                                    image={`https://pokeres.bastionbot.org/images/pokemon/${ index + 1 }.png`}
+                                    title={element.name}
+                                />
+                                <CardContent>
+                                    <Typography variant="body2" color="textSecondary" component="p">
+                                        N.º {index + 1}
+                                    </Typography>
 
-                                        <Typography gutterBottom variant="h5" component="h2" className={classes.textcapitalize}>
-                                            {element.name}
-                                        </Typography>
-                            
-                                    </CardContent>
+                                    <Typography gutterBottom variant="h5" component="h2" className={classes.textcapitalize}>
+                                        {element.name}
+                                    </Typography>
+                        
+                                </CardContent>
 
-                                    <CardActions>
-                                        <Typography>
-                                            <Link className="anchor" to={`/react-pokemonapi/detail/${index + 1}`}>
-                                                GO TO
-                                            </Link>
-                                        </Typography>
-                                    </CardActions>
-
-                                </CardActionArea>
-                                
-                                {/* <CardActions>
-                                    <Button variant="contained" size="small" color="primary">
-                                        GO TO
-                                    </Button>
-                                </CardActions> */}
-                            </Card>
-                        </Grid>
-                    ))
-                    :
-                    ''
-                }
-
-                {
-                    loadingSearch === true ?
-                    
-                        data.name === undefined ?
-                        <>
-                            <Grid item xs={12} >
-                                <Typography gutterBottom variant="h5" component="h2">
-                                    Not found
-                                </Typography>
-                            </Grid>
-                            <Grid item xs={12} className={classes.textalign}>
-                            <ThemeProvider theme={theme}>
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    size="large"
-                                    onClick={() =>{refresh()}}
-                                >
-                                    GO BACK
-                                </Button>
-                            </ThemeProvider>
-                            </Grid>
-                        </>
-                        :
-                        <>
-                            <Grid item xs={12} sm={4} md={3} lg={3} xl={2} >
-                                <Card className={classes.root}>
-                                    <CardActionArea>
-                                        <CardMedia
-                                            className={classes.media}
-                                            image={`https://pokeres.bastionbot.org/images/pokemon/${data.id}.png`}
-                                            title={data.name}
-                                        />
-                                        <CardContent>
-                                            <Typography variant="body2" color="textSecondary" component="p">
-                                                N.º {data.id}
-                                            </Typography>
-
-                                            <Typography gutterBottom variant="h5" component="h2" className={classes.textcapitalize}>
-                                                {data.name}
-                                            </Typography>
-                                
-                                        </CardContent>
-
-                                        <CardActions>
-                                            <Typography>
-                                                <Link className="anchor" to={`/react-pokemonapi/detail/${data.id}`}>
-                                                    GO TO
-                                                </Link>
-                                            </Typography>
-                                        </CardActions>
-
-                                    </CardActionArea>
-                                    
-                                    {/* <CardActions>
-                                        <Button variant="contained" size="small" color="primary">
+                                <CardActions>
+                                    <Typography>
+                                        <Link className="anchor" to={`/react-pokemonapi/detail/${index + 1}`}>
                                             GO TO
-                                        </Button>
-                                    </CardActions> */}
-                                </Card>
-                            </Grid>
-                            <Grid item xs={12} className={classes.textalign}>
-                                <ThemeProvider theme={theme}>
-                                    <Button
-                                        variant="contained"
-                                        color="primary"
-                                        size="large"
-                                        onClick={() =>{refresh()}}
-                                    >
-                                        GO BACK
-                                    </Button>
-                                </ThemeProvider>
-                            </Grid>
-                        </>
-                    : ""
-            }
-            </Grid>
+                                        </Link>
+                                    </Typography>
+                                </CardActions>
 
-                {
-                    loadingSearch === false ?
-                    <Grid
+                            </CardActionArea>
+
+                        </Card>
+                    </Grid>
+                ))
+                :
+                ''
+            }
+
+            {
+                loadingSearch === true ?
+                
+                    data.name === undefined  || data.name === null || data.name === ''?
+                    <>
+                    <Grid item xs={12} >
+                        <Typography gutterBottom variant="h5" component="h2">
+                            Not found
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12} className={classes.textalign}>
+                        <ThemeProvider theme={theme}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                size="large"
+                                onClick={() =>{refresh()}}
+                            >
+                                GO BACK
+                            </Button>
+                        </ThemeProvider>
+                    </Grid> 
+                    </>
+                    :
+                    <>
+                    <Grid item xs={12} sm={4} md={3} lg={3} xl={2} >
+                        <Card className={classes.root}>
+                            <CardActionArea>
+                                <CardMedia
+                                    className={classes.media}
+                                    image={`https://pokeres.bastionbot.org/images/pokemon/${data.id}.png`}
+                                    title={data.name}
+                                />
+                                <CardContent>
+                                    <Typography variant="body2" color="textSecondary" component="p">
+                                        N.º {data.id}
+                                    </Typography>
+
+                                    <Typography gutterBottom variant="h5" component="h2" className={classes.textcapitalize}>
+                                        {data.name}
+                                    </Typography>
+                        
+                                </CardContent>
+
+                                <CardActions>
+                                    <Typography>
+                                        <Link className="anchor" to={`/react-pokemonapi/detail/${data.id}`}>
+                                            GO TO
+                                        </Link>
+                                    </Typography>
+                                </CardActions>
+
+                            </CardActionArea>
+                            
+                            {/* <CardActions>
+                                <Button variant="contained" size="small" color="primary">
+                                    GO TO
+                                </Button>
+                            </CardActions> */}
+                        </Card>
+                    </Grid>
+                    <Grid item xs={12} className={classes.textalign}>
+                        <ThemeProvider theme={theme}>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                size="large"
+                                onClick={() =>{refresh()}}
+                            >
+                                GO BACK
+                            </Button>
+                        </ThemeProvider>
+                    </Grid>
+                    </>
+        
+                :''
+            }                
+        </Grid>
+
+        {
+            loading === true && loadingSearch === false?
+
+            <Grid
                 container
                 direction="row"
                 justify="center"
@@ -255,12 +251,12 @@ const CardResponse = (inputSearch) => {
                     </ThemeProvider>
                 </Box>
             </Grid>
-                    :
-                    ''    
-                }          
-            <Backdrop className={classes.backdrop} open={open}>
-                <CircularProgress color="inherit" />
-            </Backdrop>
+            :
+            ''    
+        }          
+        <Backdrop className={classes.backdrop} open={open}>
+            <CircularProgress color="inherit" />
+        </Backdrop>
         </>
     )
 }
