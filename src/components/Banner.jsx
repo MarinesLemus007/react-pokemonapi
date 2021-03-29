@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles({
     bannercontainer: {
         background: '#313131',
-        height: 250,
+        // height: 250,
         overflow: 'hidden',
         // marginBottom: '50px !important'
     },

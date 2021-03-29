@@ -72,3 +72,33 @@
 .anchor-goback:hover{
     background-color: #1f1f1f;
 }
+
+.MuiChip-colorSecondary, .MuiChip-colorSecondary {
+    margin: 0px 1px 0px 1px;
+}
+
+.makeStyles-buttongroup-6 {
+    margin-top: 100px !important;
+}
+
+@media(max-width: 475px){
+
+    .makeStyles-bannercontainer-1 {
+        height: 130px !important;
+    }
+
+    .MuiButton-containedSizeLarge, .anchor-goback {
+        font-size: 0.7375rem !important;
+        padding: 5px !important;
+    }
+
+    .makeStyles-buttongroup-6 {
+        margin-top: 0 !important;
+    }
+}
+
+@media (max-width: 320px){
+    .MuiButton-containedSizeLarge, .anchor-gobac {
+        font-size: 0.7rem !important;
+    }
+}

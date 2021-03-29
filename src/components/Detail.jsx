@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
 import axios from 'axios';
-import { Grid, Card, CardContent, CardMedia, Typography, LinearProgress, Button } from '@material-ui/core/';
+import { Grid, Card, CardContent, CardMedia, Typography, LinearProgress, Button, Backdrop, CircularProgress } from '@material-ui/core/';
 import { makeStyles, withStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles/';
 import Chip from '@material-ui/core/Chip';
 import { amber } from '@material-ui/core/colors';
@@ -46,14 +46,14 @@ const useStyles = makeStyles((theme) => ({
         color: '#fff',
     },
     buttongroup:{
-        marginTop: '100px !important',
+        // marginTop: '100px !important',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center'
     },
     textalign:{
         textAlign: 'center'
-    }
+    },
 }));
 
 const theme = createMuiTheme({
@@ -78,10 +78,14 @@ const Detail = () => {
 
     const [previousName, setPreviousName] = useState('');
 
+    const [open, setOpen] = useState(false);
+
     useEffect(() => {
 
         const getResponseById = async () => {
             try {
+                setOpen(true)
+
                 const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
                 // console.log(response.data)
                 setDetailById(response.data)
@@ -90,6 +94,7 @@ const Detail = () => {
                 console.log(error)
             }finally{
                 setLoading(true)
+                setOpen(false)
             }
         }
         getResponseById()
@@ -99,11 +104,14 @@ const Detail = () => {
             let nextPagById = parseInt(id) + 1
 
             try {
+                setOpen(true)
                 const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${nextPagById}`)
                 setNextName(response.data.name)
             }
             catch (error) {
                 console.log(error)
+            }finally{
+                setOpen(false)
             }
         }
         getNamePaginationNext()
@@ -113,11 +121,14 @@ const Detail = () => {
             let previousPagById = parseInt(id) - 1
 
             try {
+                setOpen(true)
                 const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${previousPagById}`)
                 setPreviousName(response.data.name)
             }
             catch (error) {
                 console.log(error)
+            }finally{
+                setOpen(false)
             }
         }
         getNamePaginationPrevious()
@@ -256,7 +267,7 @@ const Detail = () => {
                                 {
                                 detailById.stats.map((el, index) =>{ 
                                 
-                                return <div className="barprogress" key={index}><p>{el.stat.name}:</p><BorderLinearProgress variant="determinate" value={el.base_stat}/></div>
+                                return <div className="barprogress" key={index}><p>{el.stat.name}:</p><BorderLinearProgress variant="determinate" value={(el.base_stat*100)/150}/></div>
                                 
                                 })
                                 }
@@ -273,6 +284,9 @@ const Detail = () => {
 
             </Grid>
         : null  }
+            <Backdrop className={classes.backdrop} open={open}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
         </>
     );
 }
