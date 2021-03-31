@@ -50,7 +50,7 @@ const CardResponse = (inputSearch) => {
     const data = useSelector(store => store.pokemonData.data)
 
     const loading = useSelector(store => store.pokemonData.loading)
-    
+
     const loadingSearch = useSelector(store => store.pokemonData.loadingSearch)
 
     useEffect(() => {
@@ -75,7 +75,7 @@ const CardResponse = (inputSearch) => {
         <>
         <Grid container spacing={1}>
             {
-                loading === true && inputSearch.inputSearch === '' ? data.map((element, index) =>( 
+                loading === true && inputSearch.inputSearch === ''? data.map((element, index) =>( 
                     <Grid item xs={12} sm={4} md={3} lg={3} xl={2} key={index}>
                         <Card className={classes.root}>
                             <CardActionArea>

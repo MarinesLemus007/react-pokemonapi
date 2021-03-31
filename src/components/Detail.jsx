@@ -158,6 +158,7 @@ const Detail = () => {
                     alignItems="center"
                     alignContent="center"
                 >
+                    <div className="margintopfix"></div>
                     
                     <Grid container spacing={1}  className={classes.buttongroup}>
                         <ThemeProvider theme={theme}>

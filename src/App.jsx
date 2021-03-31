@@ -1,4 +1,3 @@
-
 import Banner from './components/Banner';
 import Navbar from './components/Navbar';
 import Detail from './components/Detail';
@@ -22,7 +21,7 @@ function App() {
 
           <Route path="/react-pokemonapi/" exact>
             <Banner />
-            <Navbar/> 
+            <Navbar/>     
             <ScrollUpButton />
           </Route>
           

@@ -30,7 +30,7 @@ export default function pokemonReducer(state = initialState, action){
             return {...state, page: action.payload.page, data: action.payload.data}
         
         case GET_RESPONSE_FINALLY:
-            return {...state, loading: action.payload.loading, open: action.payload.open}
+            return {...state, loading: action.payload.loading, loadingSearch: action.payload.loadingSearch, open: action.payload.open}
 
         case GET_RESPONSE_SEARCH_TRY:
             return {...state, data: action.payload.data}
@@ -39,7 +39,7 @@ export default function pokemonReducer(state = initialState, action){
             return {...state, data: action.payload.data}
 
         case GET_RESPONSE_SEARCH_FINALLY:
-            return {...state, loadingSearch: action.payload.loadingSearch, open: action.payload.open}
+            return {...state, loadingSearch: action.payload.loadingSearch, loading: action.payload.loading, open: action.payload.open}
 
         default:
             return state
@@ -53,10 +53,10 @@ export const getResponse = (num) => async (dispatch, getState) => {
     dispatch({
         type: CIRCULAR_PROGRESS,
         payload: {
-            open: true
+            open: true,
         }
     })
-
+    
     const page = getState().pokemonData.page;
     let viewMore;
     
@@ -87,6 +87,7 @@ export const getResponse = (num) => async (dispatch, getState) => {
             type: GET_RESPONSE_FINALLY,
             payload:{
                 loading: true,
+                loadingSearch: false,
                 open: false
             }
         })
@@ -132,6 +133,7 @@ export const getResponseSearch = (inputSearch) => async (dispatch) => {
             type: GET_RESPONSE_SEARCH_FINALLY,
             payload:{
                 loadingSearch: true,
+                loading: false,
                 open: false
             }
         })
