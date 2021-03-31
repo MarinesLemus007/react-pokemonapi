@@ -43,11 +43,15 @@ const CardResponse = (inputSearch) => {
 
     const dispatch = useDispatch()
 
-    const data = useSelector(store => store.pokemonData.data)
     const open = useSelector(store => store.pokemonData.open)
-    const loading = useSelector(store => store.pokemonData.loading)
-    const loadingSearch = useSelector(store => store.pokemonData.loadingSearch)
+
     const page = useSelector(store => store.pokemonData.page)
+
+    const data = useSelector(store => store.pokemonData.data)
+
+    const loading = useSelector(store => store.pokemonData.loading)
+    
+    const loadingSearch = useSelector(store => store.pokemonData.loadingSearch)
 
     useEffect(() => {
 

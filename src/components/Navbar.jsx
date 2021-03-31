@@ -50,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
     transition: theme.transitions.create('width'),
     width: '100%',
@@ -65,48 +64,51 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = () => {
 
-    const classes = useStyles();
+  const classes = useStyles();
 
-    const [inputSearch, setInputSearch] = useState('');
+  const [inputSearch, setInputSearch] = useState('');
 
-    const handleInputChange = (event) => {
-      if (event.keyCode === 13) {
-        setInputSearch(event.target.value.toLowerCase())
-        // console.log(event.target.value.toLowerCase())
-      }
+  const handleInputChange = (event) => {
+    if (event.keyCode === 13) {
+      setInputSearch(event.target.value.toLowerCase())
     }
+  }
    
-    return (
-      <> 
-        <div className={classes.root}>
-      <AppBar position="static" style={{ backgroundColor: '#ffc107' }}>
-        <Toolbar>
-          
-          <Typography className={classes.title} variant="h6" noWrap>
-          Find pokemon by number or name
-          </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+  return (
+    <> 
+      <div className={classes.root}>
+        <AppBar position="static" style={{ backgroundColor: '#ffc107' }}>
+          <Toolbar>
+        
+            <Typography className={classes.title} variant="h6" noWrap>
+            Find pokemon by number or name
+            </Typography>
+
+            <div className={classes.search}>
+
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+
+              <InputBase
+                type="text"
+                placeholder="Push enter to search"
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+                onKeyDown={handleInputChange}  
+              />
+
             </div>
-            <InputBase
-              type="text"
-              placeholder="Push enter to search"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-              onKeyDown={handleInputChange}
-              
-            />
-          </div>
-        </Toolbar>
-      </AppBar>
-    </div>
-    <CardResponse inputSearch={inputSearch}/>
+
+          </Toolbar>
+        </AppBar>
+      </div>
+      <CardResponse inputSearch={inputSearch}/>
     </>
-     );
+  );
 }
  
 export default Navbar;

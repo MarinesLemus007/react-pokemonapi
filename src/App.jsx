@@ -22,8 +22,7 @@ function App() {
 
           <Route path="/react-pokemonapi/" exact>
             <Banner />
-            <Navbar/>     
-            {/* <CardResponse inputSearch={inputSearch}/>  */}
+            <Navbar/> 
             <ScrollUpButton />
           </Route>
           

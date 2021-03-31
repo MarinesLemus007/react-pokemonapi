@@ -46,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
         color: '#fff',
     },
     buttongroup:{
-        // marginTop: '100px !important',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center'
@@ -60,7 +59,7 @@ const theme = createMuiTheme({
     palette: {
       primary: amber
     },
-  });
+});
 
 const Detail = () => {
 
@@ -87,7 +86,6 @@ const Detail = () => {
                 setOpen(true)
 
                 const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
-                // console.log(response.data)
                 setDetailById(response.data)
             }
             catch (error) {
@@ -147,148 +145,152 @@ const Detail = () => {
     }
 
     return (
-        <>{loading === true ?
+        <>
+        
+            {
+                loading === true ?
 
-            <Grid
-                container
-                spacing={1}
-                direction="row"
-                justify="center"
-                alignItems="center"
-                alignContent="center"
-                // wrap="nowrap"
-            >
-                <div className="margintopfix"></div>
-
-                <Grid container spacing={1}  className={classes.buttongroup}>
-                    <ThemeProvider theme={theme}>
-                    <Grid item xs={6} md={4}>
+                <Grid
+                    container
+                    spacing={1}
+                    direction="row"
+                    justify="center"
+                    alignItems="center"
+                    alignContent="center"
+                >
                     
-                    { parseInt(id) <= 1 ? 
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            size="large"
-                            fullWidth
-                            startIcon={<ChevronLeftIcon/>}
-                            onClick={()=>{previousClick()}}
-                            disabled>
-                            N.º{parseInt(id) - 1}
-                        </Button>
-                        :
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            size="large"
-                            fullWidth
-                            startIcon={<ChevronLeftIcon/>}
-                            onClick={()=>{previousClick()}}
-                        >
-                            N.º{parseInt(id) - 1} {previousName}
-                        </Button>
-                    }
-
-                    </Grid>
-                        <Grid item xs={6} md={4}>
+                    <Grid container spacing={1}  className={classes.buttongroup}>
+                        <ThemeProvider theme={theme}>
+                            <Grid item xs={6} md={4}>
                         
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            size="large"
-                            fullWidth
-                            endIcon={<ChevronRightIcon/>}
-                            onClick={()=>{nextClick()}}
-                        >
-                            N.º{parseInt(id) + 1} {nextName}
-                        </Button>
-                        
-                        </Grid>
-                    </ThemeProvider>
-                </Grid>
-                
-                <Grid item xs={12} sm={6} md={4}>
-                    <Card className={classes.cardshadowless}>
-                        <CardMedia
-                            className={classes.media}
-                            image={`https://pokeres.bastionbot.org/images/pokemon/${id}.png`}
-                            title={detailById.name}
-                        />
-                    </Card>
-                </Grid>
+                                { 
+                                    parseInt(id) <= 1 ? 
 
-                <Grid item xs={12} sm={6} md={4}>
-                    <Card className={classes.root}>
-                        <CardContent>
-
-                            <Typography gutterBottom variant="h5" component="h2" className={classes.textcapitalize}>
-                                {detailById.name}
-                            </Typography>
-
-                            <div className="d-flex">
-                                <div>
-                                    <Typography variant="body2" component="p">
-                                        Height:  
-                                    </Typography>
-                                    <Chip label={detailById.height / 10 + "m"} color="default" size="small"/>
-                                </div>
-
-                                <div>
-                                    <Typography variant="body2" component="p">
-                                        Weight:
-                                    </Typography>
-                                    <Chip label={detailById.weight / 10 + "Kg"} color="default" size="small"/>
-                                </div>
-
-                                <div>
-                                <Typography variant="body2" component="p">
-                                    Types:
-                                </Typography>
-                                    {   
-                                        detailById.types.length > 1 ?
-                                        detailById.types.map((el, index)=>{ 
-                                            return <Chip key={index} label={el.type.name} color="secondary" size="small"/> })
-                                        :                                 
-                                        <Chip label={detailById.types[0].type.name} color="secondary" size="small"/>
-                                    }
-                                </div>
-                            </div>
-
-                            <div className="d-flex">
-                            <Typography variant="body2" component="p">
-                                Abilities:
-                            </Typography>
-                                {   
-                                    detailById.abilities.length > 1 ?
-                                    detailById.abilities.map((el, index)=>{
-                                        return <Chip key={index} label={el.ability.name} color="primary" size="small" />})
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        size="large"
+                                        fullWidth
+                                        startIcon={<ChevronLeftIcon/>}
+                                        onClick={()=>{previousClick()}}
+                                        disabled>
+                                        N.º{parseInt(id) - 1}
+                                    </Button>
                                     :
-                                    <Chip label={detailById.abilities[0].ability.name} color="primary" size="small" />
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        size="large"
+                                        fullWidth
+                                        startIcon={<ChevronLeftIcon/>}
+                                        onClick={()=>{previousClick()}}
+                                    >
+                                        N.º{parseInt(id) - 1} {previousName}
+                                    </Button>
                                 }
-                            </div>
-                            <div>
-                            <Typography variant="body2" component="p">
-                                Stats:
-                            </Typography>
-                                {
-                                detailById.stats.map((el, index) =>{ 
-                                
-                                return <div className="barprogress" key={index}><p>{el.stat.name}:</p><BorderLinearProgress variant="determinate" value={(el.base_stat*100)/150}/></div>
-                                
-                                })
-                                }
-                            </div>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                
-                <Grid item xs={12} className={classes.textalign}>
-                    <Link className="anchor-goback" to="/react-pokemonapi/">
-                        GO BACK
-                    </Link>
-                </Grid>
 
-            </Grid>
-        : null  }
+                            </Grid>
+
+                            <Grid item xs={6} md={4}>                   
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    size="large"
+                                    fullWidth
+                                    endIcon={<ChevronRightIcon/>}
+                                    onClick={()=>{nextClick()}}
+                                >
+                                    N.º{parseInt(id) + 1} {nextName}
+                                </Button>
+                            </Grid>
+
+                        </ThemeProvider>
+                    </Grid>
+                
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Card className={classes.cardshadowless}>
+                            <CardMedia
+                                className={classes.media}
+                                image={`https://pokeres.bastionbot.org/images/pokemon/${id}.png`}
+                                title={detailById.name}
+                            />
+                        </Card>
+                    </Grid>
+
+                    <Grid item xs={12} sm={6} md={4}>
+                        <Card className={classes.root}>
+                            <CardContent>
+
+                                <Typography gutterBottom variant="h5" component="h2" className={classes.textcapitalize}>
+                                    {detailById.name}
+                                </Typography>
+
+                                <div className="d-flex">
+                                    <div>
+                                        <Typography variant="body2" component="p">
+                                            Height:  
+                                        </Typography>
+                                        <Chip label={detailById.height / 10 + "m"} color="default" size="small"/>
+                                    </div>
+
+                                    <div>
+                                        <Typography variant="body2" component="p">
+                                            Weight:
+                                        </Typography>
+                                        <Chip label={detailById.weight / 10 + "Kg"} color="default" size="small"/>
+                                    </div>
+
+                                    <div>
+                                    <Typography variant="body2" component="p">
+                                        Types:
+                                    </Typography>
+                                        {   
+                                            detailById.types.length > 1 ?
+                                            detailById.types.map((el, index)=>{ 
+                                                return <Chip key={index} label={el.type.name} color="secondary" size="small"/> })
+                                            :                                 
+                                            <Chip label={detailById.types[0].type.name} color="secondary" size="small"/>
+                                        }
+                                    </div>
+                                </div>
+
+                                <div className="d-flex">
+                                    <Typography variant="body2" component="p">
+                                        Abilities:
+                                    </Typography>
+                                        {   
+                                            detailById.abilities.length > 1 ?
+                                            detailById.abilities.map((el, index)=>{
+                                                return <Chip key={index} label={el.ability.name} color="primary" size="small" />})
+                                            :
+                                            <Chip label={detailById.abilities[0].ability.name} color="primary" size="small" />
+                                        }
+                                </div>
+                                <div>
+                                    <Typography variant="body2" component="p">
+                                        Stats:
+                                    </Typography>
+                                        {
+                                        detailById.stats.map((el, index) =>{ 
+                                        
+                                        return <div className="barprogress" key={index}><p>{el.stat.name}:</p><BorderLinearProgress variant="determinate" value={(el.base_stat*100)/150}/></div>
+                                        
+                                        })
+                                        }
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                
+                    <Grid item xs={12} className={classes.textalign}>
+                        <Link className="anchor-goback" to="/react-pokemonapi/">
+                            GO BACK
+                        </Link>
+                    </Grid>
+
+                </Grid>
+                : null  
+            }
             <Backdrop className={classes.backdrop} open={open}>
                 <CircularProgress color="inherit" />
             </Backdrop>
