@@ -4,10 +4,15 @@ import Navbar from './components/Navbar';
 import Detail from './components/Detail';
 import { TinyButton as ScrollUpButton } from "react-scroll-up-button";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {Provider} from 'react-redux';
+import generateStore from "./redux/store";
 
 function App() {
+
+  const store = generateStore()
+
   return (
-    <>
+    <Provider store={store}>
       <Router>
         <Switch>
 
@@ -24,7 +29,7 @@ function App() {
           
         </Switch>
       </Router>
-    </>
+    </Provider>
   );
 }
 

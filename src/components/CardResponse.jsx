@@ -1,8 +1,9 @@
-import React,{ useState, useEffect } from 'react'
+import React,{ useEffect } from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {getResponse, getResponseSearch} from '../redux/Ducks';
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Grid, Card, CardActionArea, CardContent, CardMedia, Typography, Button,
 Box, CardActions, Backdrop, CircularProgress } from '@material-ui/core/';
-import axios from 'axios';
 import Visibility from '@material-ui/icons/Visibility';
 import { amber } from '@material-ui/core/colors';
 import {Link} from "react-router-dom";
@@ -36,71 +37,31 @@ const theme = createMuiTheme({
     },
   });
 
-
 const CardResponse = (inputSearch) => {
 
     const classes = useStyles();
 
-    const [loading, setLoading] = useState(false);
+    const dispatch = useDispatch()
 
-    const [loadingSearch, setLoadingSearch] = useState(false);
-
-    const [data, setData] = useState([]);
-
-    const [page, setPage] = useState(20);
-
-    const [open, setOpen] = useState(false);
-
-    const nextPage = () =>{
-        setPage(page + 20)
-    }
+    const data = useSelector(store => store.pokemonData.data)
+    const open = useSelector(store => store.pokemonData.open)
+    const loading = useSelector(store => store.pokemonData.loading)
+    const loadingSearch = useSelector(store => store.pokemonData.loadingSearch)
+    const page = useSelector(store => store.pokemonData.page)
 
     useEffect(() => {
 
-        const getResponse = async () =>{
-            try{
-                setOpen(true)
-                    
-                const response = await axios.get(`https://pokeapi.co/api/v2/pokemon?offset=0&limit=${page}`)
-                   
-                setData(response.data.results)    
-            }
-            catch(error){
-                console.log(error);
-            }
-            finally{
-                setLoading(true)
-                setOpen(false)
-            }
-        }
-
-        const getResponseSearch = async () =>{
-            try{
-                setOpen(true)
-               
-                const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${inputSearch.inputSearch}`)
-                   
-                setData(response.data)
-            }
-            catch(error){
-                console.log(error);
-                setData([])
-            }
-            finally{
-                setLoadingSearch(true)
-                setOpen(false)
-            }
-        }
-
         if(inputSearch.inputSearch !== ''){
-            setLoading(false)
-            getResponseSearch();
+            dispatch(getResponseSearch(inputSearch.inputSearch))
         }else{
-            setLoadingSearch(false)
-            getResponse();
+            dispatch(getResponse())
         }
 
-    }, [page, inputSearch.inputSearch])
+      }, [dispatch, page, inputSearch.inputSearch])
+
+    const nextPage = () =>{
+        dispatch(getResponse(20))
+    }
 
     const refresh = () => {
         window.location.reload();
@@ -110,7 +71,7 @@ const CardResponse = (inputSearch) => {
         <>
         <Grid container spacing={1}>
             {
-                loading === true ? data.map((element, index) =>( 
+                loading === true && inputSearch.inputSearch === '' ? data.map((element, index) =>( 
                     <Grid item xs={12} sm={4} md={3} lg={3} xl={2} key={index}>
                         <Card className={classes.root}>
                             <CardActionArea>
@@ -201,11 +162,6 @@ const CardResponse = (inputSearch) => {
 
                             </CardActionArea>
                             
-                            {/* <CardActions>
-                                <Button variant="contained" size="small" color="primary">
-                                    GO TO
-                                </Button>
-                            </CardActions> */}
                         </Card>
                     </Grid>
                     <Grid item xs={12} className={classes.textalign}>
@@ -244,7 +200,7 @@ const CardResponse = (inputSearch) => {
                             color="primary"
                             size="large"
                             endIcon={<Visibility />}
-                            onClick={() =>{nextPage()}}
+                            onClick={()=>{nextPage()}}
                         >
                             SEE MORE
                         </Button>
